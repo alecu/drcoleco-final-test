@@ -63,19 +63,31 @@ l804ch:
 	ld bc,00611h		;806c	01 11 06 	. . . 
 	call sub_8701h		;806f	cd 01 87 	. . . 
 	ld bc,00704h		;8072	01 04 07 	. . . 
-	ld hl,l_rom_good		;8075	21 d9 83 	! . . 
-	pop de			;8078	d1 	. 
-	ld a,d			;8079	7a 	z 
-	cp 0d4h		;807a	fe d4 	. . 
-	jr nz,l8083h		;807c	20 05 	  . 
-	ld a,e			;807e	7b 	{ 
-	cp 083h		;807f	fe 83 	. . 
-	jr z,l8086h		;8081	28 03 	( . 
-l8083h:
+; split check HERE
+	jp l_double_check
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	;pop de			;8078	d1 	. 
+	;ld a,d			;8079	7a 	z 
+	;cp 0d4h		;807a	fe d4 	. . 
+	;jr nz,rom_check_bad		;807c	20 05 	  . 
+	;ld a,e			;807e	7b 	{ 
+	;cp 083h		;807f	fe 83 	. . 
+	;jr z,rom_check_ok		;8081	28 03 	( . 
+rom_check_bad:
 	ld hl,l_rom_bad		;8083	21 e2 83 	! . . 
-l8086h:
+rom_check_ok:
 	call 08361h		;8086	cd 61 83 	. a . 
-	ld hl,l83a8h		;8089	21 a8 83 	! . . 
+	ld hl,l_ram_test		;8089	21 a8 83 	! . . 
 	ld bc,00904h		;808c	01 04 09 	. . . 
 	call 08361h		;808f	cd 61 83 	. a . 
 	ld b,004h		;8092	06 04 	. . 
@@ -114,10 +126,10 @@ l80b0h:
 l80c2h:
 	ld a,001h		;80c2	3e 01 	> . 
 l80c4h:
-	ld hl,l83c7h		;80c4	21 c7 83 	! . . 
+	ld hl,l_ram_good		;80c4	21 c7 83 	! . . 
 	or a			;80c7	b7 	. 
 	jr z,l80cdh		;80c8	28 03 	( . 
-	ld hl,l83d0h		;80ca	21 d0 83 	! . . 
+	ld hl,l_ram_bad		;80ca	21 d0 83 	! . . 
 l80cdh:
 	ld bc,00910h		;80cd	01 10 09 	. . . 
 	call 08361h		;80d0	cd 61 83 	. a . 
@@ -616,7 +628,7 @@ l_rom_checksum:
 	ld d,l			;83a5	55 	U 
 	ld c,l			;83a6	4d 	M 
 	nop			;83a7	00 	. 
-l83a8h:
+l_ram_test:
 	ld d,d			;83a8	52 	R 
 	ld b,c			;83a9	41 	A 
 	ld c,l			;83aa	4d 	M 
@@ -647,7 +659,7 @@ l_sound_test:
 	ld d,e			;83c4	53 	S 
 	ld d,h			;83c5	54 	T 
 	nop			;83c6	00 	. 
-l83c7h:
+l_ram_good:
 	ld d,d			;83c7	52 	R 
 	ld b,c			;83c8	41 	A 
 	ld c,l			;83c9	4d 	M 
@@ -656,7 +668,7 @@ l83c7h:
 	ld c,a			;83cd	4f 	O 
 	ld b,h			;83ce	44 	D 
 	nop			;83cf	00 	. 
-l83d0h:
+l_ram_bad:
 	ld d,d			;83d0	52 	R 
 	ld b,c			;83d1	41 	A 
 	ld c,l			;83d2	4d 	M 
@@ -2163,6 +2175,32 @@ l8ad2h:
 	nop			;8afd	00 	. 
 	nop			;8afe	00 	. 
 	nop			;8aff	00 	. 
+l_double_check:
+	pop de
+; try checking NTSC
+	ld hl,l_rom_good_ntsc
+	ld a,d
+	cp 0d4h
+	jp nz,l_try_pal
+	ld a,e
+	cp 083h
+	jp z,rom_check_ok
+
+l_try_pal:
+; now check PAL
+	ld hl,l_rom_good_pal
+	ld a,d
+	cp 0beh
+	jp nz,rom_check_bad
+	ld a,e
+	cp 086h
+	jp z,rom_check_ok
+	jp rom_check_bad
+
+l_rom_good_ntsc:
+	db "NTSC ROM GOOD", 0
+l_rom_good_pal:
+	db "PAL ROM GOOD", 0
 	rst 38h			;8b00	ff 	. 
 	rst 38h			;8b01	ff 	. 
 	rst 38h			;8b02	ff 	. 
