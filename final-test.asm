@@ -2209,67 +2209,6 @@ l_rom_good_pal:
 	rst 38h			;8b05	ff 	. 
 	rst 38h			;8b06	ff 	. 
 	rst 38h			;8b07	ff 	. 
-	rst 38h			;8b08	ff 	. 
-	rst 38h			;8b09	ff 	. 
-	rst 38h			;8b0a	ff 	. 
-	rst 38h			;8b0b	ff 	. 
-	rst 38h			;8b0c	ff 	. 
-	rst 38h			;8b0d	ff 	. 
-	rst 38h			;8b0e	ff 	. 
-	rst 38h			;8b0f	ff 	. 
-	rst 38h			;8b10	ff 	. 
-	rst 38h			;8b11	ff 	. 
-	rst 38h			;8b12	ff 	. 
-	rst 38h			;8b13	ff 	. 
-	rst 38h			;8b14	ff 	. 
-	rst 38h			;8b15	ff 	. 
-	rst 38h			;8b16	ff 	. 
-	rst 38h			;8b17	ff 	. 
-	rst 38h			;8b18	ff 	. 
-	rst 38h			;8b19	ff 	. 
-	rst 38h			;8b1a	ff 	. 
-	rst 38h			;8b1b	ff 	. 
-	rst 38h			;8b1c	ff 	. 
-	rst 38h			;8b1d	ff 	. 
-	rst 38h			;8b1e	ff 	. 
-	rst 38h			;8b1f	ff 	. 
-	rst 38h			;8b20	ff 	. 
-	rst 38h			;8b21	ff 	. 
-	rst 38h			;8b22	ff 	. 
-	rst 38h			;8b23	ff 	. 
-	rst 38h			;8b24	ff 	. 
-	rst 38h			;8b25	ff 	. 
-	rst 38h			;8b26	ff 	. 
-	rst 38h			;8b27	ff 	. 
-	rst 38h			;8b28	ff 	. 
-	rst 38h			;8b29	ff 	. 
-	rst 38h			;8b2a	ff 	. 
-	rst 38h			;8b2b	ff 	. 
-	rst 38h			;8b2c	ff 	. 
-	rst 38h			;8b2d	ff 	. 
-	rst 38h			;8b2e	ff 	. 
-	rst 38h			;8b2f	ff 	. 
-	rst 38h			;8b30	ff 	. 
-	rst 38h			;8b31	ff 	. 
-	rst 38h			;8b32	ff 	. 
-	rst 38h			;8b33	ff 	. 
-	rst 38h			;8b34	ff 	. 
-	rst 38h			;8b35	ff 	. 
-	rst 38h			;8b36	ff 	. 
-	rst 38h			;8b37	ff 	. 
-	rst 38h			;8b38	ff 	. 
-	rst 38h			;8b39	ff 	. 
-	rst 38h			;8b3a	ff 	. 
-	rst 38h			;8b3b	ff 	. 
-	rst 38h			;8b3c	ff 	. 
-	rst 38h			;8b3d	ff 	. 
-	rst 38h			;8b3e	ff 	. 
-	rst 38h			;8b3f	ff 	. 
-	rst 38h			;8b40	ff 	. 
-	rst 38h			;8b41	ff 	. 
-	rst 38h			;8b42	ff 	. 
-	rst 38h			;8b43	ff 	. 
-	rst 38h			;8b44	ff 	. 
 	rst 38h			;8b45	ff 	. 
 	rst 38h			;8b46	ff 	. 
 	rst 38h			;8b47	ff 	. 
