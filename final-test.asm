@@ -34,8 +34,8 @@ l8001h:
 	ld a,0ffh		;8032	3e ff 	> . 
 	out (0e0h),a		;8034	d3 e0 	. . 
 	call sub_874eh		;8036	cd 4e 87 	. N . 
-	ld hl,l839bh		;8039	21 9b 83 	! . . 
-	ld bc,00604h		;803c	01 04 06 	. . . 
+	ld hl,l_rom_checksum		;8039	21 9b 83 	! . .  
+	ld bc,00604h		;803c	01 04 06 	. . .
 	call 08361h		;803f	cd 61 83 	. a . 
 	ld bc,02000h		;8042	01 00 20 	. .   
 	ld hl,00000h		;8045	21 00 00 	! . . 
@@ -63,7 +63,7 @@ l804ch:
 	ld bc,00611h		;806c	01 11 06 	. . . 
 	call sub_8701h		;806f	cd 01 87 	. . . 
 	ld bc,00704h		;8072	01 04 07 	. . . 
-	ld hl,l83d9h		;8075	21 d9 83 	! . . 
+	ld hl,l_rom_good		;8075	21 d9 83 	! . . 
 	pop de			;8078	d1 	. 
 	ld a,d			;8079	7a 	z 
 	cp 0d4h		;807a	fe d4 	. . 
@@ -72,7 +72,7 @@ l804ch:
 	cp 083h		;807f	fe 83 	. . 
 	jr z,l8086h		;8081	28 03 	( . 
 l8083h:
-	ld hl,l83e2h		;8083	21 e2 83 	! . . 
+	ld hl,l_rom_bad		;8083	21 e2 83 	! . . 
 l8086h:
 	call 08361h		;8086	cd 61 83 	. a . 
 	ld hl,l83a8h		;8089	21 a8 83 	! . . 
@@ -121,7 +121,9 @@ l80c4h:
 l80cdh:
 	ld bc,00910h		;80cd	01 10 09 	. . . 
 	call 08361h		;80d0	cd 61 83 	. a . 
-	ld hl,l83b1h		;80d3	21 b1 83 	! . . 
+; SKIP VIDEO and SOUND TEST, jmp to CONTROL TESTS
+	jp 08192h
+;	ld hl,l_video_test		;80d3	21 b1 83 	! . . 
 	ld bc,00b04h		;80d6	01 04 0b 	. . . 
 	call 08361h		;80d9	cd 61 83 	. a . 
 	ld de,04000h		;80dc	11 00 40 	. . @ 
@@ -226,7 +228,7 @@ l817ch:
 	jr nz,l817ch		;817f	20 fb 	  . 
 	djnz l817ch		;8181	10 f9 	. . 
 	call sub_874eh		;8183	cd 4e 87 	. N . 
-	ld hl,l83bch		;8186	21 bc 83 	! . . 
+	ld hl,l_sound_test		;8186	21 bc 83 	! . . 
 	ld bc,00604h		;8189	01 04 06 	. . . 
 	call 08361h		;818c	cd 61 83 	. a . 
 	call sub_8531h		;818f	cd 31 85 	. 1 . 
@@ -236,7 +238,7 @@ l817ch:
 	ld bc,001ffh		;819b	01 ff 01 	. . . 
 	ld (hl),020h		;819e	36 20 	6   
 	ldir		;81a0	ed b0 	. . 
-	ld hl,l83eah		;81a2	21 ea 83 	! . . 
+	ld hl,l_control1		;81a2	21 ea 83 	! . . 
 	ld de,07000h		;81a5	11 00 70 	. . p 
 	ld bc,00117h		;81a8	01 17 01 	. . . 
 	ldir		;81ab	ed b0 	. . 
@@ -601,7 +603,7 @@ l8390h:
 	pop af			;8397	f1 	. 
 	ei			;8398	fb 	. 
 	reti		;8399	ed 4d 	. M 
-l839bh:
+l_rom_checksum:
 	ld d,d			;839b	52 	R 
 	ld c,a			;839c	4f 	O 
 	ld c,l			;839d	4d 	M 
@@ -623,7 +625,7 @@ l83a8h:
 	ld d,e			;83ae	53 	S 
 	ld d,h			;83af	54 	T 
 	nop			;83b0	00 	. 
-l83b1h:
+l_video_test:
 	ld d,(hl)			;83b1	56 	V 
 	ld c,c			;83b2	49 	I 
 	ld b,h			;83b3	44 	D 
@@ -634,7 +636,7 @@ l83b1h:
 	ld d,e			;83b9	53 	S 
 	ld d,h			;83ba	54 	T 
 	nop			;83bb	00 	. 
-l83bch:
+l_sound_test:
 	ld d,e			;83bc	53 	S 
 	ld c,a			;83bd	4f 	O 
 	ld d,l			;83be	55 	U 
@@ -662,7 +664,7 @@ l83d0h:
 	ld b,c			;83d5	41 	A 
 	ld b,h			;83d6	44 	D 
 	jr nz,l83fdh		;83d7	20 24 	  $ 
-l83d9h:
+l_rom_good:
 	ld d,d			;83d9	52 	R 
 	ld c,a			;83da	4f 	O 
 	ld c,l			;83db	4d 	M 
@@ -671,7 +673,7 @@ l83d9h:
 	ld c,a			;83df	4f 	O 
 	ld b,h			;83e0	44 	D 
 	nop			;83e1	00 	. 
-l83e2h:
+l_rom_bad:
 	ld d,d			;83e2	52 	R 
 l83e3h:
 	ld c,a			;83e3	4f 	O 
@@ -680,7 +682,7 @@ l83e3h:
 	ld b,c			;83e7	41 	A 
 	ld b,h			;83e8	44 	D 
 	inc h			;83e9	24 	$ 
-l83eah:
+l_control1:
 	ld b,e			;83ea	43 	C 
 	ld c,a			;83eb	4f 	O 
 	ld c,(hl)			;83ec	4e 	N 
